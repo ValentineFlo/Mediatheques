@@ -1,154 +1,15 @@
 #pragma once
 // Mediatheque.cpp : Ce fichier contient la fonction 'main'. L'exécution du programme commence et se termine à cet endroit.
 //
-#include <iostream>
-#include <vector>
-
-
-class IMedia
-{
-public:
-
-    IMedia() {}
-    virtual ~IMedia() = default;
-    virtual std::string MediaType() const = 0;
-    virtual std::string title() const = 0;
-    virtual bool available() { return isAvailable; }
-
-
-protected:
-    bool isAvailable{ true };
-};
-
-
-class Book : public IMedia
-{
-public:
-
-    Book(std::string title, int isbn)
-        : m_title(title)
-        , m_ISBN(isbn)
-    {
-    }
-
-    virtual std::string MediaType() const override { return "Book"; }
-    virtual std::string title() const override { return m_title; }
-    int ibn() const { return m_ISBN; }
-
-    void addBookToBookList(Book* book)
-    {
-        m_booklist.push_back(book);
-        return;
-    }
-
-
-private:
-    int m_ISBN;
-    std::string m_title;
-    std::vector<Book*> m_booklist;
-};
-
-class Movie : public IMedia
-{
-public:
-
-    Movie(std::string title, std::string support, int ageLimit)
-        : m_support(support)
-        , m_ageLimit(ageLimit)
-        , m_title(title)
-    {
-    }
-
-    virtual std::string MediaType() const override { return "Movie"; }
-    virtual std::string title() const override { return m_title; }
-
-    void addMovieToMovieList(Movie* movie)
-    {
-        m_movielist.push_back(movie);
-        return;
-    }
-
-
-private:
-    std::string m_title;
-    std::string m_support;
-    int m_ageLimit;
-    std::vector<Movie*> m_movielist;
-};
-
-class VideoGame : public IMedia
-{
-public:
-
-    VideoGame(std::string title, std::string studio, int pegi, std::string genre)
-        : m_title(title)
-        , m_studio(studio)
-        , m_pegi(pegi)
-        , m_genre(genre)
-    {
-    }
-
-
-    virtual std::string MediaType() const override { return "Video Game"; }
-    virtual std::string title() const override { return m_title; }
-
-    void addVideoGameToVideoGameList(VideoGame* videogame)
-    {
-        m_VideoGamelist.push_back(videogame);
-        return;
-    }
-
-
-
-private:
-    std::string m_title;
-    std::string m_studio;
-    int m_pegi;
-    std::string m_genre;
-    std::vector<VideoGame*> m_VideoGamelist;
-};
-
-
-class Client
-{
-public:
-    Client(const std::string NAME, std::string FNAME, int OLD, std::string ADRESS, int PHONE, std::string MAIL)
-        : m_name(NAME)
-        , m_firstname(FNAME)
-        , m_old(OLD)
-        , m_adress(ADRESS)
-        , m_phoneNumber(PHONE)
-        , m_mail(MAIL)
-    {
-    }
-
-    void setName(const std::string& name) { m_name = name; }
-    void setFirstName(const std::string& fname) { m_firstname = fname; }
-    void setOld(int old) { m_old = old; }
-    void setAdress(const std::string& adress) { m_adress = adress; }
-    void setPhone(int phone) { m_phoneNumber = phone; }
-    void setMail(const std::string& mail) { m_mail = mail; }
-
-    std::string getName() const { return m_name; }
-    std::string getFirstName() const { return m_firstname; }
-    int getOld() const { return m_old; }
-    std::string getAdress() const { return m_adress; }
-    int getPhone() const { return m_phoneNumber; }
-    std::string getMail() const { return m_mail; }
-
-private:
-    std::string m_name;
-    std::string m_firstname;
-    int m_old;
-    std::string m_adress;
-    int m_phoneNumber;
-    std::string m_mail;
-};
+#include "Medias.h"
+#include "Client.h"
+#include "Operations.h"
 
 class Mediatheque
 {
 public:
-    ~Mediatheque() {}
+    ~Mediatheque()
+    {}
 
     void addClient(Client* client)
     {
@@ -172,7 +33,7 @@ public:
 
         if (m_clientlist.empty())
         {
-            std::cout << "Il n' y a pas de client!" << std::endl;
+            std::cout << "Il n y a pas de client!" << std::endl;
         }
 
         for (auto i = m_clientlist.begin(); i != m_clientlist.end(); ++i)
@@ -202,6 +63,7 @@ public:
         if (m_medialist.empty())
         {
             std::cout << "Il n' y a pas de medias!" << std::endl;
+            std::cout << std::endl;
         }
 
         for (auto i = m_medialist.begin(); i != m_medialist.end(); ++i)
@@ -213,10 +75,28 @@ public:
                 std::cout << std::endl;
                 std::cout << "Type de medias : " << media->MediaType() << std::endl;
                 std::cout << "Titre : " << media->title() << std::endl;
-                std::cout << "Accessibilite : " << media->available() << std::endl;
+                media->infos();
+                showStateMedia(media);
             }
         }
 
+    }
+
+    void showStateMedia(IMedia* media)
+    {
+        if (!media->getavailable())
+        {
+            std::cout << "Type : " << media->MediaType() << std::endl;
+            std::cout << "Titre : " << media->title() << std::endl;
+            std::cout << "State : borrow" << std::endl;
+        }
+        else
+        {
+            std::cout << "Type : " << media->MediaType() << std::endl;
+            std::cout << "Titre : " << media->title() << std::endl;
+            std::cout << "State : available" << std::endl;
+        }
+        std::cout << std::endl;
     }
 
     void removeClient(const std::string& name, const std::string& fname, const std::string& mail)
@@ -233,6 +113,7 @@ public:
                 std::cout << clientdelete->getFirstName() << " "
                     << clientdelete->getName() << " "
                     << clientdelete->getMail() << " a etait supprime" << std::endl;
+                std::cout << std::endl;
                 delete clientdelete;
                 i = m_clientlist.erase(i);
             }
@@ -244,18 +125,34 @@ public:
 
         }
     }
+
+
     void removeMedia(const std::string& type, const std::string& title)
     {
+        bool found = false;
+        if (m_medialist.empty())
+        {
+            std::cout << "Inventaire vide" << std::endl;
+            return;
+        }
+
         auto i = m_medialist.begin();
         while (i != m_medialist.end())
         {
             IMedia* mediadelete = *i;
-            if (mediadelete->MediaType() == type && mediadelete->title() == title)
+            if (mediadelete->MediaType() == type && mediadelete->title() == title && mediadelete->getavailable())
             {
+                found = true;
                 std::cout << mediadelete->MediaType() << " "
                     << mediadelete->title() << " a etait supprime" << std::endl;
+                std::cout << std::endl;
                 delete mediadelete;
                 i = m_medialist.erase(i);
+            }
+            else if (mediadelete->MediaType() == type && mediadelete->title() == title && !mediadelete->getavailable())
+            {
+                std::cout << "Medias empunte et ne peut pas etre supprime";
+                std::cout << std::endl;
             }
 
             else
@@ -264,11 +161,209 @@ public:
             }
 
         }
+        if (!found)
+        {
+            std::cout << "le medias a suprimer est introuvable" << std::endl;
+            std::cout << std::endl;
+        }
+        
     }
+
+
+    void borrow(Client* client, IMedia* media)
+    {
+        auto i = std::find(m_clientlist.begin(), m_clientlist.end(), client);
+        if (i == m_clientlist.end())
+        {
+            std::cout << "Client introuvable" << std::endl;
+            return;
+        }
+
+        if (client->getBorrowcounter() > 5)
+        {
+            std::cout << client->getFirstName() << " " << client->getName() << " a trop de medias" << std::endl;
+            return;
+        }
+
+        if (!media->getavailable())
+        {
+            std::cout << "Medias deja emprunte" << std::endl;
+            return;
+        }
+
+        if (Book* book = dynamic_cast<Book*> (media))
+        {
+            Borrow* borrow = new Borrow(client, media);
+            media->setavailable(false);
+            m_borrowlist.push_back(borrow);
+            client->getAddBorrowcounter();
+            return;
+        }
+
+        if (Movie* movie = dynamic_cast<Movie*> (media))
+        {
+            if (movie->getOldlimit() < client->getOld())
+            {
+                Borrow* borrow = new Borrow(client, media);
+                media->setavailable(false);
+                m_borrowlist.push_back(borrow);
+                client->getAddBorrowcounter();
+                return;
+            }
+            else if (movie->getOldlimit() > client->getOld())
+            {
+                std::cout << "tu es trop jeune" << std::endl;
+                return;
+            }
+        }
+        if (VideoGame* videogame = dynamic_cast<VideoGame*> (media))
+        {
+            if (videogame->getPegi() < client->getOld())
+            {
+                Borrow* borrow = new Borrow(client, media);
+                media->setavailable(false);
+                m_borrowlist.push_back(borrow);
+                client->getAddBorrowcounter();
+                return;
+            }
+            else if (videogame->getPegi() > client->getOld())
+            {
+                std::cout << "tu es trop jeune" << std::endl;
+                return;
+            }
+        }
+    }
+
+    void available(IMedia* media)
+    {
+        if (media->getavailable())
+        {
+            std::cout << "Le media est deja disponible : " << media->title() << std::endl;
+        }
+        else
+        {
+            media->setavailable(true);
+            std::cout << "Le media est disponible : " << media->title() << std::endl;
+        }
+    }
+
+
+
+    void giveBack(Client* client, IMedia* media)
+    {
+        
+        for (auto i = m_borrowlist.begin(); i < m_borrowlist.end(); ++i)
+        {
+            Borrow* borrow = *i;
+            if (borrow->getMedia()->title() == media->title())
+            {
+                media->setavailable(true);
+                std::cout << client->getFirstName() << " " << client->getName()
+                    << " a rendu " << media->title() << " " << media->MediaType() << std::endl;
+                media->infos();
+                i = m_borrowlist.erase(i);
+                client->getSubBorrowcounter();
+
+            }
+        }
+        
+    }
+
+    void showBorrowMedia()
+    {
+        Borrow* borrowMedia;
+        std::cout << std::endl;
+        std::cout << "Liste des medias empruntes avec leurs Infos : " << std::endl;
+
+        if (m_borrowlist.empty())
+        {
+            std::cout << "Il n' y a pas de medias empruntes!" << std::endl;
+        }
+
+        else
+        {
+            for (auto i = m_borrowlist.begin(); i != m_borrowlist.end(); ++i)
+            {
+                borrowMedia = *i;
+
+                std::cout << "Type : " << borrowMedia->getMedia()->MediaType() << std::endl;
+                std::cout << "Title : " << borrowMedia->getMedia()->title() << std::endl;
+                borrowMedia->getMedia()->infos();
+                std::cout << std::endl;
+
+            }
+        }
+    }
+
+    void showAvailableMedia()
+    {
+        std::cout << "Liste des medias disponibles et leurs infos : " << std::endl;
+
+        bool found = false;
+        for (auto i = m_medialist.begin(); i < m_medialist.end(); ++i)
+        {
+            IMedia* media = *i;
+            if (media->getavailable())
+            {
+                found = true;
+                std::cout << "Type : " << media->MediaType() << std::endl; 
+                std::cout << "Titre : " << media->title() << std::endl; 
+                media->infos();
+                std::cout << std::endl;
+            }
+        }
+
+        if (!found)
+        {
+            std::cout << "Medias inexistant" << std::endl;
+        }
+    }
+
+    void ShowWhoMedia(IMedia* media)
+    {
+        
+        if (media->getavailable())
+        {
+            std::cout << "Ce media est disponible" << std::endl;
+            return;
+        }
+
+
+        for (auto i = m_borrowlist.begin(); i < m_borrowlist.end(); ++i)
+        {
+            Borrow* borrowmedia = *i;
+            if (borrowmedia->getMedia()->MediaType() == media->MediaType()
+                && borrowmedia->getMedia()->title() == media->title())
+            {
+                std::cout <<"Le media : " << media->title() << " " << media->MediaType()<<" est emprunte par "
+                << borrowmedia->getClient()->getFirstName() << " " << borrowmedia->getClient()->getName() << std::endl;
+            }
+        }
+
+    }
+
+    void ShowWhatMedia(Client* client)
+    {
+       std::cout << client->getFirstName() << " " << client->getName() << " a emprunte : " << std::endl;
+
+        for (auto i = m_borrowlist.begin(); i < m_borrowlist.end(); ++i)
+        {
+            Borrow* borrowmedia = *i;
+            if (borrowmedia->getClient()->getFirstName() == client->getFirstName()
+                && borrowmedia->getClient()->getName() == client->getName())
+            {
+                std::cout << " - " << borrowmedia->getMedia()->title()
+                    << " (" << borrowmedia->getMedia()->MediaType() << ") " << std::endl;
+
+            }
+        }
+    }
+
 
 private:
     std::vector<Client*> m_clientlist;
     std::vector<IMedia*> m_medialist;
+    std::vector<Borrow*> m_borrowlist;
 };
 
 
