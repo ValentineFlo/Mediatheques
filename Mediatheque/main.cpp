@@ -51,13 +51,13 @@ int main()
     mediatheque.borrow(client2, movie5); 
      
     //mediatheque.giveBack(client2, movie1);
-    //mediatheque.giveBack(client1, book1);
-    //mediatheque.removeClient("Dupont", "Jean", "");
+    mediatheque.giveBack(client1, book1);
+    mediatheque.removeClient("Dupont", "charlotte", "");
 
     //mediatheque.showBorrowMedia();
     //mediatheque.showAvailableMedia();
 
-    //mediatheque.showStateMedia(movie3);
+    mediatheque.showStateMedia(movie3);
 
     //mediatheque.ShowWhoMedia(movie1);
     mediatheque.showMedia(); 

@@ -102,13 +102,14 @@ public:
     void removeClient(const std::string& name, const std::string& fname, const std::string& mail)
     {
 
-        auto i = m_clientlist.begin();
-        while (i != m_clientlist.end())
+        
+        for (auto i = m_clientlist.begin();i != m_clientlist.end();++i)
         {
             Client* clientdelete = *i;
-            if ((clientdelete->getName() == name
+            if (((clientdelete->getName() == name
                 && clientdelete->getFirstName() == fname)
                 || clientdelete->getMail() == mail)
+                && clientdelete->getBorrowcounter() == 0)
             {
                 std::cout << clientdelete->getFirstName() << " "
                     << clientdelete->getName() << " "
@@ -118,12 +119,16 @@ public:
                 i = m_clientlist.erase(i);
             }
 
-            else
+            else if (clientdelete->getBorrowcounter() > 0)
             {
-                ++i;
+                std::cout << clientdelete->getFirstName() << " "
+                    << clientdelete->getName() << " "
+                    << " pouvez vous rendre le media avant de partir " << std::endl;
+                return;
             }
 
         }
+
     }
 
 
