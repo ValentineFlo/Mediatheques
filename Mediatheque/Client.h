@@ -1,8 +1,9 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include "Medias.h"
 
-class Client
+class Client 
 {
 public:
     Client(const std::string NAME, std::string FNAME, int OLD, std::string ADRESS, int PHONE, std::string MAIL)
@@ -12,7 +13,7 @@ public:
         , m_adress(ADRESS)
         , m_phoneNumber(PHONE)
         , m_mail(MAIL)
-        , m_borrowcounter(1)
+        , m_borrowcounter(0)
     {
     }
 
@@ -43,4 +44,14 @@ private:
     int m_phoneNumber;
     std::string m_mail;
     int m_borrowcounter;
+};
+
+class ClientList : public MediaList
+{
+public:
+    ~ClientList();
+    void addClient(Client* client);
+    void showClient();
+    void removeClient(const std::string& name, const std::string& fname, const std::string& mail);
+    std::vector<Client*> m_clientlist;
 };

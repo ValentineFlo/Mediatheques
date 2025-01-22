@@ -14,7 +14,6 @@ public:
     virtual bool getavailable() { return isAvailable; }
     virtual void setavailable(bool available) { isAvailable = available; }
 
-
 protected:
     bool isAvailable{ true };
 };
@@ -103,4 +102,18 @@ private:
     std::string m_studio;
     int m_pegi;
     std::string m_genre;
+};
+
+class MediaList
+{
+public:
+    ~MediaList();
+    void addMedia(IMedia* media); 
+    void showMedia();
+    void showState(const std::string& type, const std::string& title);
+    void showStateMedia(IMedia* media);
+    void removeMedia(const std::string& type, const std::string& title);
+
+protected:
+    std::vector<IMedia*> m_medialist;
 };

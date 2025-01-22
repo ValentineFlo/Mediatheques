@@ -127,16 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Console.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mediatheque.cpp" />
+    <ClCompile Include="Medias.cpp" />
+    <ClCompile Include="Borrow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Console.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="InputCommand.h" />
     <ClInclude Include="Medias.h" />
-    <ClInclude Include="Mediatheque.h" />
-    <ClInclude Include="Operations.h" />
+    <ClInclude Include="Borrow.h" />
+    <ClInclude Include="Process.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

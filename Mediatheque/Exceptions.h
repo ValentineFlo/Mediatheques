@@ -1,5 +1,6 @@
 #pragma once
 #include <stdexcept>
+#include <sstream>
 
 #define DECLARE_NEW_EXCEPTION_CLASS(classname) \
 class classname : public std::runtime_error\
