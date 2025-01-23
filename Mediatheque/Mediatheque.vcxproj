@@ -104,6 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -127,17 +128,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Api.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Command.cpp" />
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="Interpreter.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Medias.cpp" />
     <ClCompile Include="Borrow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Api.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="Command.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Exceptions.h" />
     <ClInclude Include="InputCommand.h" />
+    <ClInclude Include="Interpreter.h" />
     <ClInclude Include="Medias.h" />
     <ClInclude Include="Borrow.h" />
     <ClInclude Include="Process.h" />
