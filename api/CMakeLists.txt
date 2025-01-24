@@ -13,6 +13,7 @@ set (HEADERS
     ${HEADER_DIR}/Console.h
     ${HEADER_DIR}/Exceptions.h
     ${HEADER_DIR}/Process.h
+    ${HEADER_DIR}/Instruction.h
 )
 
 set (SOURCES
