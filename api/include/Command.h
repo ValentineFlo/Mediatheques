@@ -15,8 +15,7 @@ struct EchoCommand : public ICommand
 	EchoCommand()
 		: m_outputMsg(nullptr)
 		, m_context(nullptr)
-	{
-	}
+	{}
 
 	EchoCommand(std::string& outputMsg, void* context)
 		: m_outputMsg(&outputMsg)
@@ -38,5 +37,8 @@ private:
 	std::string* m_outputMsg;
 	void* m_context;
 };
+
+
+
 
 #endif // COMMAND_H

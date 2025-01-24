@@ -1,7 +1,11 @@
+#include <iostream>
+#include "Api.h"
 #include "process.h"
+
+
 int main()
 {
-    Process proces;
+	    Process proces;
 
     std::vector<std::string> instructionList =
     {
@@ -42,9 +46,21 @@ int main()
     }
 
     return 0;
+	std::string msg;
+	void* data = new std::string("hello");
+
+	getInterpreter().addCommand("echo", msg, data);
+	msg += "toto";
+	getInterpreter().addCommand("echo", msg, data);
+
+	cmd_init();
+	cmd_tick();
+	std::cout << msg << std::endl;
+	cmd_tick();
+	std::cout << msg << std::endl;
+	
+
+	cmd_shutdown();
+	
+	return 0;
 }
-
-#include <iostream>
-#include "Api.h"
-
-

@@ -1,6 +1,4 @@
 #include "Interpreter.h"
-
-
 InterpreterBuilder::command_to_execute* InterpreterBuilder::command_to_execute::clone()
 {
 	return new command_to_execute(name, fn, outputMsg, context);
@@ -8,8 +6,7 @@ InterpreterBuilder::command_to_execute* InterpreterBuilder::command_to_execute::
 
 Interpreter::Interpreter()
 	: m_isInitialized(false)
-{
-}
+{}
 
 void Interpreter::init()
 {

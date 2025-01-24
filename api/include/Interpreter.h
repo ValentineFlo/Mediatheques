@@ -70,16 +70,16 @@ private:
 				return it->second->clone(output, context);
 		}
 
-		~Factory()
-		{
-			for (auto& [key, value] : m_registry)
-			{
-				delete value;
-				value = nullptr;
-			}
-
-			m_registry.clear();
-		}
+		 ~Factory()
+		 {
+		 	for (auto& [key, value] : m_registry)
+		 	{
+		 		delete value;
+		 		value = nullptr;
+		 	}
+		
+		 	m_registry.clear();
+		 }
 
 	private:
 		std::map<std::string, ICommand*> m_registry;
